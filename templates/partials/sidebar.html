@@ -1,0 +1,64 @@
+
+{% load static %}
+{% block content %}
+<div class="col-lg-4">
+
+    <div class="sidebar">
+
+      <h3 class="sidebar-title">Search</h3>
+      <div class="sidebar-item search-form">
+        <form action="{% url 'articles:search-article' %}" method="GET">
+          <input type="text" name="search_query" />
+          <button type="submit"><i class="bi bi-search"></i></button>
+        </form>
+      </div><!-- End sidebar search formn-->
+
+      <h3 class="sidebar-title">Categories</h3>
+      <div class="sidebar-item categories">
+        <ul>
+          {% for category in categories %}
+
+          <li><a href="{% url 'articles:article-by-category' category.slug %}">{{category.name|title}} <span>{{ category.num_published_articles }}</span></a></li>
+        
+          {% endfor %}
+        </ul>
+      </div><!-- End sidebar categories-->
+
+      <h3 class="sidebar-title">Recent Posts</h3>
+      <div class="sidebar-item recent-posts">
+       
+        {% for article in recent_articles %}
+
+        <div class="post-item clearfix">
+          <img src="{{article.image_headline_url}}" alt="" />
+          <h4>
+            <a href=""
+              >{{article.title|title}}</a
+            >
+          </h4>
+          <time datetime="{{article.created_on}}">{{article.created_on}}</time>
+        </div>
+        {% endfor %}
+
+       
+
+       
+
+      </div><!-- End sidebar recent posts-->
+
+      <h3 class="sidebar-title">Tags</h3>
+      <div class="sidebar-item tags">
+        <ul>
+          {% for tag in tags %}
+
+          <li><a href="{% url 'articles:article-by-tag' tag.slug %}">{{tag.name}}</a></li>
+          {% endfor %}
+        
+        </ul>
+      </div><!-- End sidebar tags-->
+
+    </div><!-- End sidebar -->
+
+  </div><!-- End blog sidebar -->
+{% endblock content %}
+    

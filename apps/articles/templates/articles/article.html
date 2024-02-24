@@ -1,0 +1,33 @@
+
+
+{% block content %}
+<article class="entry">
+
+    <div class="entry-img">
+      <img src="{{article.image_headline_url}}" alt="" class="img-fluid">
+    </div>
+
+    <h2 class="entry-title">
+      <a href="{% url 'articles:article-detail' article.slug %}">{{article.title|title}}</a>
+    </h2>
+
+    <div class="entry-meta">
+      <ul>
+        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{article.author.user.full_name|title}}</a></li>
+        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{article.created_on}}</time></a></li>
+        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+      </ul>
+    </div>
+
+    <div class="entry-content">
+      <p>
+        {{article.content.html|striptags|truncatewords:40|title}}
+      </p>
+      <div class="read-more">
+        <a href="{% url 'articles:article-detail' article.slug %}">Read More</a>
+      </div>
+    </div>
+
+  </article><!-- End blog entry -->
+{% endblock content %}
+    

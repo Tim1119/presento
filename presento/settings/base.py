@@ -5,6 +5,7 @@ import logging
 from django.utils.log import DEFAULT_LOGGING
 import environ
 from datetime import timedelta
+from PIL import Image
 
 
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'presento.settings.development')
@@ -35,14 +36,23 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
    'apps.accounts',
+   'apps.articles',
+   'apps.profiles',
 ]
 
 THIRD_PARTY_APPS = [
+  'imagekit',
+  'django_quill',
+  'django_cleanup.apps.CleanupConfig',
+  'mptt',
   
 ]
 
 
+
+
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.articles.context_processors.categories',
+                'apps.articles.context_processors.tags',
             ],
         },
     },
@@ -164,3 +176,7 @@ logging.config.dictConfig(
 )
 
 AUTH_USER_MODEL = 'accounts.User'
+
+Image.ANTIALIAS = 3 
+
+

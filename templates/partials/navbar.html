@@ -1,0 +1,51 @@
+{% load static %}
+{% block content %}
+    <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+      <h1 class="logo me-auto"><a href="{% url 'articles:home' %}">Presento<span>.</span></a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto " href="{% url 'articles:home' %}">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'articles:draft-articles' %}">Draft Articles</a></li>
+          <li><a class="active" href="{% url 'articles:create-article' %}">Create Article</a></li>
+          
+          {% if article_categories %}
+          <li class="dropdown"><a href="#"><span>Article Category</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              {% for category in article_categories %}
+              <li><a href="#">{{category.name|title}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+          {% if article_tags %}
+          <li class="dropdown"><a href="#"><span>Article Tags</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              {% for tag in article_tags %}
+              <li><a href="#">{{tag.name|title}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+            
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      
+      {% if request.user.is_authenticated %}
+        
+      <a href="" class="get-started-btn scrollto">Logout</a>
+      {% else %}
+      <a href="" class="get-started-btn scrollto">Login</a>
+      {% endif %}
+        
+    </div>
+  </header><!-- End Header -->
+{% endblock content %}
+    

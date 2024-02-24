@@ -12,7 +12,8 @@ class SignupView(SuccessMessageMixin,CreateView):
     form_class=SignUpForm
     success_url=reverse_lazy('login')
     success_message='account successfully created'
-    template_name='accounts/signup.html'
+    template_name='base.html'
+    # template_name='accounts/signup.html'
 
     def form_valid(self, form):
         response = super().form_valid(form)

@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+{% block title %}  Home Page {% endblock title%}
+{% block content %}
+
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li>Blog</li>
+        </ol>
+        <h2>Blog</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+            {% include 'partials/messages.html' %}
+
+              {% if articles %}
+                  
+              {% for article  in articles %}
+                  
+              {% include 'articles/article.html' %}   
+              
+              {% endfor %}
+              {% else %}   
+              <h2 class="entry-title">
+                  <a >No article available</a>
+                </h2>   
+              {% endif %}
+        </div><!-- End blog entries list -->
+
+        
+        
+        {% include 'partials/sidebar.html' %}
+            
+            
+                
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Section -->
+
+  <!-- End #main -->
+{% endblock content %}
+    

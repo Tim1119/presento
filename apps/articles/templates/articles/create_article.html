@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %} Create Article {% endblock title%}
+{% block content %}
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Create Article</h2>
+        <ol>
+          <li><a href="{% url 'articles:home' %}">Home</a></li>
+          <li><a>Blog</a></li>
+          <li>Create Article</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <form
+          action="{% url 'articles:create-article' %}"
+          class="form-group"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+        {% csrf_token %}
+          {{form.as_p}}  {{ form.media }}
+          <div class="container d-flex justify-content-center">
+            <button class="btn btn-success mx-auto btn-block">
+              Create Article
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </section>
+
+</main>
+{% endblock content %}
+

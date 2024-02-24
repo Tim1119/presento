@@ -1,0 +1,161 @@
+
+{% extends 'base.html' %}
+{% block title %} Article Detail {% endblock title%}
+{% block content %}
+
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li>{{article.category.name|title}}</li>
+          </ol>
+          <h2>{{article.title|title}}</h2>
+  
+        </div>
+      </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="row">
+  
+            <div class="col-lg-8 entries">
+  
+              <article class="entry entry-single">
+  
+                <div class="entry-img">
+                  <img src="{{article.image_headline_url}}" alt="" class="img-fluid">
+                </div>
+  
+                <h2 class="entry-title">
+                  <a >{{article.title|title}}</a>
+                </h2>
+  
+                <div class="entry-meta">
+                  <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{article.author.user.full_name|title}}</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{article.created_on}}</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  </ul>
+                </div>
+  
+                <div class="entry-content">
+                  <!-- {{article.content|safe}} -->
+                    {{article.content.html|safe|title}}
+  
+                </div>
+  
+                <div class="entry-footer">
+                 
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex ">
+                      <div class="me-3">
+                        <span>32 likes</span>
+                        <span>
+
+                          <i class="bi bi-thumbs-up"></i>
+                          <button class="btn btn-sm btn-primary" >Like</button>
+                        </span>
+                      </div>
+
+                      <div>
+                        
+                        {% if tags %}
+                          
+                        <i class="bi bi-tags"></i>
+                        <ul class="tags">
+                          
+                          {% for tag in tags  %}
+                          <li><a href="{% url 'articles:article-by-tag' tag.slug %}">{{tag.name}}</a></li>
+                          {% endfor %}
+                            
+                        </ul>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="d-flex" >
+                      <a href="{% url 'articles:update-article' article.slug %} " class="btn btn-primary btn-sm me-2 text-white" >Update</a>
+                      <form action="{% url 'articles:delete-article' article.slug %}" method="POST">
+                        {% csrf_token %}
+                        <button  class="btn btn-danger btn-sm" >Delete</button>
+                      </form>
+                    </div>
+
+                  </div>
+                    
+                </div>
+  
+              </article><!-- End blog entry -->
+  
+              <div class="blog-author d-flex align-items-center">
+                <img src="{{article.author.profile_pic_url}}" class="rounded-circle float-left" alt="">
+                <div>
+                  <h4>{{article.author.user.full_name|title}}</h4>
+                  <div class="social-links">
+                    <a href="{{article.author.twitter}}"><i class="bi bi-twitter"></i></a>
+                    <a href="{{article.author.facebook}}"><i class="bi bi-facebook"></i></a>
+                    <a href="{{article.author.instagram}}"><i class="biu bi-instagram"></i></a>
+                  </div>
+                  <p>
+                    {{article.author.bio|title}}
+                  </p>
+                </div>
+              </div><!-- End blog author bio -->
+  
+              <div class="blog-comments">
+                {% include 'partials/messages.html' %}
+  
+                <h4 class="comments-count">{{article.comment_set.count}}
+                  Comment{{article.comment_set.count|pluralize }}</h4>
+                
+                
+                {% for comment in article.get_all_comments  %}
+                  
+                <div id="comment-1" class="comment">
+                  <div class="d-flex">
+                    <div class="comment-img"><img src="{{ comment.author.profile_picture_url }}" alt=""></div>
+                    <div>
+                      <h5><a href="">{{comment.author.user.full_name|title}}</a> </h5>
+                      <time datetime="2020-01-01">{{comment.created_on}}</time>
+                      <p>
+                       {{comment.content|title}}
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- End comment #1 -->
+                {% endfor %}
+                  
+  
+  
+                <div class="reply-form">
+                  <h4>Leave a Reply</h4>
+                  <p>Your email address will not be published. Required fields are marked * </p>
+                  <form action="{% url 'articles:create-comment' article.slug %}" method="POST">
+                    
+                    {% csrf_token %} {{form.as_p}}
+                    <button type="submit" class="btn btn-primary">
+                      Post Comment
+                    </button>
+                  </form>
+  
+                </div>
+  
+              </div><!-- End blog comments -->
+  
+            </div><!-- End blog entries list -->
+  
+            {% include 'partials/sidebar.html' %}
+  
+          </div>
+  
+        </div>
+      </section><!-- End Blog Single Section -->
+
+  <!-- End #main -->
+{% endblock content %}
+    
