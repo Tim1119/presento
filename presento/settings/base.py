@@ -21,7 +21,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 #----------------------------------------------  PRODUCTION VARIABLES ---------------------------------------------------------------
 SECRET_KEY=env('SECRET_KEY')
 DEBUG = env('DEBUG')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(" ")
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
 
