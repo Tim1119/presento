@@ -14,14 +14,14 @@ from PIL import Image
 env = environ.Env(DEBUG=(bool, False))
 
 #---------------------------------------------------------- READING ENV FILES ---------------------------------------------------------
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR / ".env")
 
 
 #----------------------------------------------  PRODUCTION VARIABLES ---------------------------------------------------------------
-SECRET_KEY=env('SECRET_KEY')
-DEBUG = env('DEBUG')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+SECRET_KEY='django-insecure-jonuy3j5anmm1l4#qnu631%!*u!m&c+(_emje)!+8w@!sbxn-_'
+DEBUG = True
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
