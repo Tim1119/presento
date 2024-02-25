@@ -10,7 +10,7 @@
 7. Abiity to save articles as drafts to be published later
 8. Profile
 
-## signup page
+## Signup page
 ![](https://github.com/Tim1119/presento/blob/main/demo/signup.JPG) 
 ## Login Page
 ![](https://github.com/Tim1119/presento/blob/main/demo/login.JPG) 
