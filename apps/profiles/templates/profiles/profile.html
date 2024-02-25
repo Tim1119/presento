@@ -1,0 +1,138 @@
+{% extends 'base.html' %} 
+{% block title %}
+    Profile 
+{% endblock title %}
+     {% block content %}
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Profile</h2>
+        <ol>
+          <li><a href="{% url 'articles:home' %}">Home</a></li>
+          <li>Profile</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <!-- End Breadcrumbs -->
+
+  <!-- ======= Blog Single Section ======= -->
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="col-lg-12 entries">
+          {% include 'partials/messages.html' %}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="container">
+                <img
+                    src="{{profile.profile_pic_url}}"
+                    alt=""
+                    class="img-fluid"
+                  />
+              </div>
+            </div>
+            <div class="col-md-8">
+
+              <article class="entry entry-single">
+                
+                <h2 class="entry-title d-flex justify-items-between">
+                  <a href="blog-single.html"
+                    >Profile for {{profile.user.full_name|title}}
+                    </a
+                  >
+                  <a  href="blog-single.html"
+                    >Update Profile
+                    </a
+                  >
+                </h2>
+    
+                <div class="entry-meta">
+                  <table class="table table-bordered">
+                    
+                    <tbody>
+                      <tr>
+                        <th scope="row"><i class="bi bi-person"></i></th>
+                        <th  scope="col">Name</th>
+                        <th  scope="col">{{profile.user.full_name|title}}</th>
+                        
+                      </tr>
+                      <tr>
+                        <th scope="row"><i class="bi bi-envelope"></i></th>
+                        <td>Email</td>
+                        <td>{{profile.user.email}}</td>
+                       
+                      </tr>
+                      
+                      {% if profile.facebook %}               
+                      <tr>
+                        <th scope="row"><i class="bi bi-facebook"></i></th>
+                        <td colspan="2">{{profile.facebook}}</td>  
+                      </tr>
+                      {% endif %}
+                      {% if profile.twitter %}               
+                      <tr>
+                        <th scope="row"><i class="bi bi-twitter"></i></th>
+                        <td colspan="2">{{profile.twitter}}</td>  
+                      </tr>
+                      {% endif %}
+                      {% if profile.instagram %}               
+                      <tr>
+                        <th scope="row"><i class="bi bi-instagram"></i></th>
+                        <td colspan="2">{{profile.instagram}}</td>  
+                      </tr>
+                      {% endif %}
+                      <tr>
+                        <th scope="row"><i class="bi bi-pen"></i></th>
+                        <td colspan="2">{{articles.all.count}} posts created</td>  
+                      </tr>
+                      <tr>
+                        <th scope="row"><i class="bi bi-heart"></i></th>
+                        <td colspan="2">{{profile.bio|title}}</td>  
+                      </tr>
+                        
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="entry-title">
+                <!-- {{request.user.profile.linkedin}} -->
+                <a>Articles You've Published </a>
+              </h2>
+              {% if articles %}
+                  
+              {% for article  in articles %}
+                  
+              {% include 'articles/article.html' %}   
+              
+              {% endfor %}
+              {% else %}   
+              <h2 class="entry-title">
+                  <a >No article available</a>
+                </h2>   
+              {% endif %}
+            </div>
+            {% include 'partials/sidebar.html' %}
+          </div>
+          
+           
+            
+          </div>
+          <!-- End blog entry -->
+
+         
+        </div>
+        <!-- End blog entries list -->
+      </div>
+    </div>
+  </section>
+  <!-- End Blog Single Section -->
+</main>
+<!-- End #main -->
+{% endblock content %}

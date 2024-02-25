@@ -177,6 +177,20 @@ def search_article(request):
         articles = Article.objects.filter(title__icontains=search_query)
         return render(request, 'articles/searched_article.html', {'articles': articles, 'categories': categories, "recent_articles": recent_articles, 'tags': tags, 'searched_query': search_query})
 
+@login_required()
+@require_http_methods('POST')
+def like_or_unlike_article(request):
+    article_slug = request.POST.get('article_slug')
+    article = get_object_or_404(Article, slug=article_slug)
+    user_profile = request.user.profile  # Assuming user is authenticated
+    if request.method == 'POST':
+        # If the request is a POST request, toggle the like status
+        article.toggle_like(user_profile)
+        # Redirect back to the same page to update the like status
+        return redirect('articles:article-detail', slug=article_slug)
+    else:
+        messages.error(request,'you could not like the article due to an error')
+        return redirect('articles:article-detail', slug=article_slug)
 
 class ArticleDraftsListView(LoginRequiredMixin, ListView):
     model = Article

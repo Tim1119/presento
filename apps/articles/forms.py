@@ -9,7 +9,7 @@ class ArticleForm(ModelForm):
 
     class Meta:
         model = Article
-        body = QuillFormField() 
+        # content = QuillFormField() 
         exclude = ['author', 'approved', 'likes']
 
     def __init__(self, *args, **kwargs):

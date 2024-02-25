@@ -54,12 +54,25 @@
                  
                   <div class="d-flex justify-content-between">
                     <div class="d-flex ">
-                      <div class="me-3">
-                        <span>32 likes</span>
+                      <div class="me-3 d-flex align-items-center">
+                        <span>{{article.count_likes}} like{{article.count_likes|pluralize }}</span> 
+                        <form method="POST" action="{% url 'articles:like_or_unlike_article' %}">
+                          <input type="hidden" name="article_slug" value="{{article.slug}}" />
+                          {% csrf_token %}
+                          {% if request.user.is_authenticated %}
+                              {% if request.user.profile in article.likes.all %}
+                                  <button  class="btn btn-sm btn-danger" type="submit" name="action" value="unlike"> <i class="bi bi-thumbs-down"></i> Unlike</button>
+                              {% else %}
+                                  <button  class="btn btn-sm btn-primary" type="submit" name="action" value="like">  <i class="bi bi-thumbs-up"></i> Like</button>
+                              {% endif %}
+                          {% else %}
+                              <p>Login to like this article</p>
+                          {% endif %}
+                      </form>
                         <span>
 
-                          <i class="bi bi-thumbs-up"></i>
-                          <button class="btn btn-sm btn-primary" >Like</button>
+                         
+                          
                         </span>
                       </div>
 

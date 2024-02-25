@@ -1,4 +1,8 @@
 {% load static %}
+{% url 'articles:home' as path_to_home %}
+{% url 'articles:create-article' as path_to_create_article %}
+{% url 'article:draft-articles' as path_to_draft_articles %}
+{% url 'profiles:profile' as path_to_my_profile %}
 {% block content %}
     <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center">
@@ -9,16 +13,27 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto " href="{% url 'articles:home' %}">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'articles:draft-articles' %}">Draft Articles</a></li>
-          <li><a class="active" href="{% url 'articles:create-article' %}">Create Article</a></li>
+          <li><a class="nav-link scrollto {% if request.path == path_to_home %}active{% endif %}"  href="{% url 'articles:home' %}">Home</a></li>
+          {% if article_tags %}
+          <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              
+              <li><a class="nav-link scrollto {% if request.path == path_to_my_profile %}active{% endif %}" href="{% url 'profiles:profile' %}">Profile</a></li>
+              <li><a href="{% url 'profiles:update-profile' request.user.profile.slug %}">Update Profile</a></li>
+              
+            </ul>
+          </li>
+          {% endif %}
+       
+          <li><a class="{% if request.path == path_to_draft_articles %}active{% endif %} nav-link scrollto" href="{% url 'articles:draft-articles' %}">Draft Articles</a></li>
+          <li><a class="{% if request.path == path_to_create_articles %}active{% endif %}  nav-link scrollto" href="{% url 'articles:create-article' %}">Create Article</a></li>
+         
           
           {% if article_categories %}
           <li class="dropdown"><a href="#"><span>Article Category</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for category in article_categories %}
-              <li><a href="#">{{category.name|title}}</a></li>
+              <li><a  href="{% url 'articles:article-by-category' category.slug %}">{{category.name|title}}</a></li>
               {% endfor %}
             </ul>
           </li>
@@ -27,23 +42,27 @@
           <li class="dropdown"><a href="#"><span>Article Tags</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for tag in article_tags %}
-              <li><a href="#">{{tag.name|title}}</a></li>
+              <li><a href="{% url 'articles:article-by-tag' tag.slug %}">{{tag.name|title}}</a></li>
               {% endfor %}
             </ul>
           </li>
           {% endif %}
-            
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       
       {% if request.user.is_authenticated %}
-        
-      <a href="" class="get-started-btn scrollto">Logout</a>
-      {% else %}
+
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="get-started-btn scrollto" type="submit">Logout</button>
+        {% else %}
       <a href="" class="get-started-btn scrollto">Login</a>
       {% endif %}
+    </form>
+        
+      
+      
         
     </div>
   </header><!-- End Header -->

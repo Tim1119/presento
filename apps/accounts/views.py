@@ -12,7 +12,7 @@ class SignupView(SuccessMessageMixin,CreateView):
     form_class=SignUpForm
     success_url=reverse_lazy('login')
     success_message='account successfully created'
-    template_name='base.html'
+    template_name='accounts/signup.html'
     # template_name='accounts/signup.html'
 
     def form_valid(self, form):
@@ -23,10 +23,17 @@ class SignupView(SuccessMessageMixin,CreateView):
 
 class AccountLoginView(SuccessMessageMixin,LoginView):
     template_name = 'accounts/login.html'
-    success_url=reverse_lazy('login')
+    success_url=reverse_lazy('articles:home')
     success_message='account logged in successfully'
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+        return form
 
-class LogoutUserView(LogoutView):
+
+class LogoutUserView(SuccessMessageMixin,LogoutView):
     next_page = reverse_lazy('accounts:login')  
+    success_message='account logged out successfully'
 

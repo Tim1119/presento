@@ -179,4 +179,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 Image.ANTIALIAS = 3 
 
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'articles:home'
+
 

@@ -24,7 +24,8 @@
           enctype="multipart/form-data"
         >
         {% csrf_token %}
-          {{form.as_p}}  {{ form.media }}
+        
+        {{form.as_p}}  {{ form.media}}
           <div class="container d-flex justify-content-center">
             <button class="btn btn-success mx-auto btn-block">
               Update Article

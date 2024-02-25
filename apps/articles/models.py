@@ -52,7 +52,7 @@ class Article(models.Model):
     content = QuillField()
     status = models.CharField(max_length=255, choices=ArticleStatus.choices, default=ArticleStatus.Draft)
     approved = models.BooleanField(default=True)
-    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    likes = models.ManyToManyField(Profile, related_name='liked_articles', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -77,6 +77,15 @@ class Article(models.Model):
         except:
             url = ''
         return url
+
+    def count_likes(self):
+        return self.likes.count()
+
+    def toggle_like(self, user_profile):
+        if user_profile in self.likes.all():
+            self.likes.remove(user_profile)
+        else:
+            self.likes.add(user_profile)
 
 
 class Comment(models.Model):
